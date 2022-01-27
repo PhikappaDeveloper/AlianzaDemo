@@ -1,10 +1,25 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+
 import 'package:app_alianzademo/pages/HomePage.dart';
 import 'package:app_alianzademo/pages/InitPage.dart';
-import 'package:app_alianzademo/database/user.dart';
+import 'package:app_alianzademo/pages/AuthPage.dart';
+import 'package:app_alianzademo/pages/LoginPage.dart';
+import 'package:app_alianzademo/pages/RegisterPage.dart';
 
-void main() {
-  runApp(MyApp());
+import 'package:app_alianzademo/services/auth.dart';
+import 'package:app_alianzademo/services/notifications.dart';
+
+void main() => runApp(AppState());
+
+class AppState extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return MultiProvider(
+      providers: [ChangeNotifierProvider(create: (_) => Auth())],
+      child: MyApp(),
+    );
+  }
 }
 
 class MyApp extends StatelessWidget {
@@ -12,43 +27,15 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: MainPage(),
+      initialRoute: 'auth',
+      routes: {
+        'auth': (_) => AuthPage(),
+        'home': (_) => HomePage(),
+        'init': (_) => InitPage(),
+        'login': (_) => LoginPage(),
+        'register': (_) => RegisterPage(),
+      },
+      scaffoldMessengerKey: Notifications.messengerKey,
     );
-  }
-}
-
-class MainPage extends StatefulWidget {
-  @override
-  _MainPageState createState() => _MainPageState();
-}
-
-class _MainPageState extends State<MainPage> {
-
-  Future<bool> isLogin() async {
-    var users = await user.isUserEmpty();
-    if (users) {
-      return true;
-    } else {
-      return false;
-    }
-  }
-
-  @override
-  void initState() {
-    super.initState();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    
-    return FutureBuilder(
-        future: isLogin(),
-        builder: (context, snapshot) {
-          if (snapshot.data == true) {
-            return HomePage();
-          } else {
-            return InitPage();
-          }
-        });
   }
 }

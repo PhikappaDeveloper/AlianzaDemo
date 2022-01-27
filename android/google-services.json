@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "433353284026",
+    "firebase_url": "https://flutter-demos-6a9b5-default-rtdb.firebaseio.com",
+    "project_id": "flutter-demos-6a9b5",
+    "storage_bucket": "flutter-demos-6a9b5.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:433353284026:android:9671ecd64166ff2df72583",
+        "android_client_info": {
+          "package_name": "com.alianzademo.app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "433353284026-uac3o5ocsaee2834ltdvqa3k1mqf8su9.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.alianzademo.app",
+            "certificate_hash": "04caf6ac5a6e22b6ca01dabd5fec57e919d91539"
+          }
+        },
+        {
+          "client_id": "433353284026-kds4kain6ionicv1hpe41lv4q7si8nh3.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDF7cpzNYCgIvmiOKxRcHQaXrB_qgXQa0A"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "433353284026-kds4kain6ionicv1hpe41lv4q7si8nh3.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

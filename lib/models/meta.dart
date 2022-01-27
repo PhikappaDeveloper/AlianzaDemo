@@ -4,12 +4,7 @@ class Meta {
   final String ahorro;
   final String fecha;
 
-  Meta(
-      {
-      this.id ,
-      this.meta = "",
-      this.ahorro = "",
-      this.fecha = ""});
+  Meta({this.id, this.meta = "", this.ahorro = "", this.fecha = ""});
 
   factory Meta.fromMap(Map<String, dynamic> res) {
     return Meta(
@@ -20,11 +15,6 @@ class Meta {
   }
 
   Map<String, Object?> toMap() {
-    return {
-      'id': id,
-      'meta': meta,
-      'ahorro': ahorro,
-      'fecha':fecha
-    };
+    return {'id': id, 'meta': meta, 'ahorro': ahorro, 'fecha': fecha};
   }
 }

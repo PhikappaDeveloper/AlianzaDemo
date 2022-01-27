@@ -3,7 +3,6 @@ import 'package:sqflite/sqflite.dart' as sql;
 import 'package:app_alianzademo/models/meta.dart';
 
 class meta {
-
   static Future<void> createTables(sql.Database database) async {
     await database.execute("""CREATE TABLE metas(
         id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
@@ -24,25 +23,24 @@ class meta {
     );
   }
 
-  static Future<int> createItem(String? metas, String? ahorro, String? fecha) async {
+  static Future<int> createItem(
+      String? metas, String? ahorro, String? fecha) async {
     final db = await meta.db();
 
-    final data = {'meta': metas, 'ahorro': ahorro, 'fecha':fecha};
+    final data = {'meta': metas, 'ahorro': ahorro, 'fecha': fecha};
     final id = await db.insert('metas', data,
         conflictAlgorithm: sql.ConflictAlgorithm.replace);
     return id;
   }
 
-    static Future<int> updateItem(int id, String metas, String? ahorro, String? fecha) async {
+  static Future<int> updateItem(
+      int id, String metas, String? ahorro, String? fecha) async {
     final db = await meta.db();
 
-    final data = {
-      'metas': metas,
-      'ahorro': ahorro,
-      'fecha': fecha
-    };
+    final data = {'metas': metas, 'ahorro': ahorro, 'fecha': fecha};
 
-    final result = await db.update('metas', data, where: "id = ?", whereArgs: [id]);
+    final result =
+        await db.update('metas', data, where: "id = ?", whereArgs: [id]);
 
     return result;
   }
@@ -51,8 +49,7 @@ class meta {
     final db = await meta.db();
     try {
       await db.delete("metas", where: "id = ?", whereArgs: [id]);
-    } 
-    catch (err) {}
+    } catch (err) {}
   }
 
   static Future<List<Map<String, dynamic>>> getItem(int id) async {
@@ -64,5 +61,4 @@ class meta {
     final db = await meta.db();
     return db.query('metas', orderBy: "id");
   }
-
 }

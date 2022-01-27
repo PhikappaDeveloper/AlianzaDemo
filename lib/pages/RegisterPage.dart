@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import 'package:app_alianzademo/providers/loginProvider.dart';
 import 'package:app_alianzademo/services/auth.dart';
 import 'package:app_alianzademo/services/notifications.dart';
-import 'package:app_alianzademo/providers/loginProvider.dart';
 import 'package:app_alianzademo/ui/input_decorations.dart';
 
-class LoginPage extends StatelessWidget {
+class RegisterPage extends StatelessWidget {
   bool isLoading = false;
 
   @override
@@ -34,22 +34,20 @@ class LoginPage extends StatelessWidget {
                       child: Column(
                         children: [
                           Image.asset(
-                            'asset/images/ic_coin_login.png',
-                            width: 150.0,
-                            height: 150.0,
+                            'asset/images/ic_about_1.png',
+                            width: 200.0,
+                            height: 250.0,
                             fit: BoxFit.cover,
                           ),
                           SizedBox(height: 10),
                           //Text('Iniciar', style: Theme.of(context).textTheme.headline4 ),
-                          Text(
-                              'Inicia sesion para continuar, Ingresa tu Correo Electronico',
+                          Text('Registrate con tu Correo Electronico',
                               style: TextStyle(
                                   fontSize: 14, color: Colors.black87)),
                           SizedBox(height: 30),
-
                           ChangeNotifierProvider(
                               create: (_) => loginProvider(),
-                              child: _LoginForm())
+                              child: _RegisterForm())
                         ],
                       )),
                 ],
@@ -58,7 +56,7 @@ class LoginPage extends StatelessWidget {
   }
 }
 
-class _LoginForm extends StatelessWidget {
+class _RegisterForm extends StatelessWidget {
   final _formKey = GlobalKey<FormState>();
   TextEditingController nameController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
@@ -81,13 +79,9 @@ class _LoginForm extends StatelessWidget {
                   prefixIcon: Icons.email),
               onChanged: (value) => loginForm.email = value,
               validator: (value) {
-                String pattern =
-                    r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$';
-                RegExp regExp = new RegExp(pattern);
-
-                return regExp.hasMatch(value ?? '')
-                    ? null
-                    : 'Incorrecto el Formato del Correo';
+                if (value != null && value.isEmpty) {
+                  return 'Falta ingresar el Email';
+                }
               },
             ),
             SizedBox(height: 30),
@@ -95,7 +89,7 @@ class _LoginForm extends StatelessWidget {
               controller: passwordController,
               autocorrect: false,
               obscureText: true,
-              keyboardType: TextInputType.text,
+              keyboardType: TextInputType.emailAddress,
               decoration: InputDecorations.authInputDecoration(
                   hintText: '*****',
                   labelText: 'Contraseña',
@@ -117,30 +111,27 @@ class _LoginForm extends StatelessWidget {
                 child: Container(
                     padding: EdgeInsets.symmetric(horizontal: 80, vertical: 15),
                     child: Text(
-                      loginForm.isLoading ? 'Cargando...' : 'Ingresar',
+                      loginForm.isLoading ? 'Cargando...' : 'Guardar',
                       style: TextStyle(color: Colors.white),
                     )),
-                onPressed: loginForm.isLoading
-                    ? null
-                    : () async {
-                        if (_formKey.currentState!.validate()) {
-                          loginForm.isLoading = true;
+                onPressed: () async {
+                  if (_formKey.currentState!.validate()) {
+                    loginForm.isLoading = true;
 
-                          FocusScope.of(context).unfocus();
-                          final auth =
-                              Provider.of<Auth>(context, listen: false);
+                    FocusScope.of(context).unfocus();
+                    final auth = Provider.of<Auth>(context, listen: false);
 
-                          final String? message = await auth.login(
-                              loginForm.email, loginForm.password);
+                    final String? errorMessage = await auth.Register(
+                        loginForm.email, loginForm.password);
 
-                          if (message == null) {
-                            Navigator.pushReplacementNamed(context, 'home');
-                          } else {
-                            Notifications.showSnackbar(message);
-                            loginForm.isLoading = false;
-                          }
-                        }
-                      })
+                    if (errorMessage == null) {
+                      Navigator.pushReplacementNamed(context, 'home');
+                    } else {
+                      Notifications.showSnackbar(errorMessage);
+                      loginForm.isLoading = false;
+                    }
+                  }
+                })
           ],
         ),
       ),

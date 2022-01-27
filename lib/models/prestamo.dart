@@ -3,31 +3,18 @@ class Prestamo {
   final String prestamo;
   final String pago;
   final String fecha;
-  final String interes;
 
-  Prestamo(
-      {this.id = "",
-      this.prestamo = "",
-      this.pago = "",
-      this.fecha = "",
-      this.interes= ""});
+  Prestamo({this.id = "", this.prestamo = "", this.pago = "", this.fecha = ""});
 
   factory Prestamo.fromMap(Map<String, dynamic> res) {
     return Prestamo(
         id: res["id"],
         prestamo: res["prestamo"],
         pago: res["pago"],
-        fecha: res["fecha"],
-        interes: res['interes']);
+        fecha: res["fecha"]);
   }
 
   Map<String, Object?> toMap() {
-    return {
-      'id': id,
-      'prestamo': prestamo,
-      'pago': pago,
-      'fecha': fecha,
-      'interes': interes
-    };
+    return {'id': id, 'prestamo': prestamo, 'pago': pago, 'fecha': fecha};
   }
 }
